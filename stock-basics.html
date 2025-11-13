@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course: Stock Market Basics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .cta-button { transition: background-color 0.3s ease; border-radius: 9999px; font-weight: 700; padding: 0.75rem 1.5rem; }
+        .primary-cta { background-color: #3b82f6; color: white; }
+        .primary-cta:hover { background-color: #2563eb; }
+        .secondary-cta { background-color: white; color: #3b82f6; border: 2px solid #3b82f6; }
+        .secondary-cta:hover { background-color: #eff6ff; }
+        .course-syllabus { background-color: #ffffff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); }
+        .lesson-link { padding: 1rem; cursor: pointer; border-bottom: 1px solid #f3f4f6; transition: background-color 0.2s; display: block; }
+        .lesson-link:hover { background-color: #f9fafb; }
+        .lesson-link.active { background-color: #eff6ff; color: #2563eb; font-weight: 600; }
+        .locked-content { color: #9ca3af; pointer-events: none; opacity: 0.6; }
+        .unlocked-lesson { color: #1f2937; pointer-events: auto; opacity: 1; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4); }
+        .modal-content { background-color: #ffffff; margin: 15% auto; padding: 20px; border-radius: 1rem; width: 90%; max-width: 400px; animation: fadeIn 0.3s; }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
+        .close-btn:hover, .close-btn:focus { color: #000; text-decoration: none; cursor: pointer; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .input-field { padding: 10px; border: 1px solid #d1d5db; border-radius: 0.5rem; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+        header { position: sticky; top: 0; z-index: 50; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header & Navigation -->
+    <header class="p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold text-blue-600"><a href="index.html">Trading Academy</a></h1>
+            <nav class="hidden md:flex space-x-6 text-gray-600 font-medium">
+                <a href="index.html#courses" class="hover:text-blue-600 transition duration-150">Courses</a>
+                <a href="index.html#sessions" class="hover:text-blue-600 transition duration-150">Live Sessions</a>
+                <a href="#syllabus" class="hover:text-blue-600 transition duration-150">Syllabus</a>
+            </nav>
+            <div id="loggedOutButtons" class="flex space-x-3">
+                <button id="loginBtn" class="secondary-cta">Login</button>
+                <button id="signupBtn" class="primary-cta">Sign Up</button>
+            </div>
+            <div id="loggedInProfile" class="hidden flex items-center space-x-3">
+                <button id="profileBtn" class="text-gray-700 font-medium hover:text-blue-600 transition duration-150 flex items-center space-x-1">
+                    <i class="fas fa-user-circle text-xl"></i>
+                    <span id="profileName" class="truncate max-w-[80px]">Profile</span>
+                </button>
+                <button id="logoutBtn" class="text-sm px-3 py-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-150">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Course Header -->
+    <section class="course-header bg-blue-600 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-sm font-semibold opacity-80 mb-2">Fundamental Course</p>
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Stock Market Basics: Zero to Investor</h2>
+            <div class="flex items-center space-x-6 text-lg">
+                <span class="flex items-center"><i class="fas fa-video mr-2"></i> 5 Modules</span>
+                <span class="flex items-center"><i class="fas fa-user-graduate mr-2"></i> Beginner Level</span>
+                <span class="flex items-center"><i class="fas fa-certificate mr-2"></i> Certified</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Column: Syllabus and Access Control -->
+        <div id="syllabus" class="lg:col-span-1 space-y-8">
+            <div class="course-syllabus p-6">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Course Syllabus</h3>
+                <nav class="space-y-1">
+                    <a href="#" class="lesson-link active" data-lesson="1" onclick="event.preventDefault(); switchLessonContent(1);"><i class="fas fa-play-circle mr-2"></i> 1. What is a Stock? (Free Preview)</a>
+                    <a href="#" class="lesson-link locked-content" data-lesson="2" onclick="event.preventDefault();"><i class="fas fa-lock mr-2"></i> 2. Market Structures (Unlock Required)</a>
+                    <a href="#" class="lesson-link locked-content" data-lesson="3" onclick="event.preventDefault();"><i class="fas fa-lock mr-2"></i> 3. Bull vs. Bear Markets (Unlock Required)</a>
+                    <a href="#" class="lesson-link locked-content" data-lesson="4" onclick="event.preventDefault();"><i class="fas fa-lock mr-2"></i> 4. Reading a Stock Quote (Unlock Required)</a>
+                    <a href="#" class="lesson-link locked-content" data-lesson="5" onclick="event.preventDefault();"><i class="fas fa-lock mr-2"></i> 5. Quiz & Certificate Prep (Unlock Required)</a>
+                </nav>
+            </div>
+            
+            <!-- Access Control Box (Dynamically updated by script.js) -->
+            <div class="access-control-box bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h3><i class="fas fa-lock"></i> Content Locked</h3>
+                <p>Please **Login** or **Sign Up** to purchase and unlock the full course content.</p>
+            </div>
+            
+        </div>
+
+        <!-- Right Column: Lesson Viewer -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- Video Player -->
+            <div class="bg-gray-900 rounded-xl shadow-xl overflow-hidden h-96">
+                <div id="video-placeholder" class="w-full h-full">
+                    <!-- Content injected by script.js -->
+                </div>
+            </div>
+
+            <!-- Lesson Passage & Resources -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 id="course-title" class="text-3xl font-extrabold text-gray-900 mb-4">What is a Stock? Understanding Equity</h3>
+                
+                <h4 id="lesson-passage-title" class="text-xl font-semibold text-gray-800 mt-6 mb-3">Passage to Read: What is a Stock? Understanding Equity</h4>
+                <div id="lesson-passage-content" class="text-gray-600 space-y-4">
+                    <p>A stock represents fractional ownership in a company. When you buy a stock, you are buying a tiny piece of that corporation and its assets. The price is driven by supply and demand in the secondary market. The primary market is where stock is first sold (via an IPO), and the secondary market is where stocks are traded between investors. Understanding the difference between these is fundamental before you execute your first trade.</p>
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+                    <span class="text-lg font-semibold text-gray-700 flex items-center">
+                        <i class="fas fa-file-pdf mr-2 text-red-500"></i> Lesson Resources:
+                    </span>
+                    <a id="download-link" href="pdfs/Lesson_1_Summary.pdf" download class="cta-button secondary-cta text-sm">Download PDF Summary</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer (Repeat from index.html for completeness) -->
+    <footer class="bg-gray-800 text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-xl font-bold mb-4 text-blue-400">Trading Academy</h4>
+                <p class="text-sm text-gray-400">Educating the next generation of successful traders and investors.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="index.html#courses" class="hover:text-blue-400">Courses</a></li>
+                    <li><a href="index.html#sessions" class="hover:text-blue-400">Live Sessions</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-blue-400">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-blue-400">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                <p class="text-sm text-gray-400">Email: support@academy.com</p>
+                <p class="text-sm text-gray-400">Phone: +91 98765 43210</p>
+            </div>
+        </div>
+        <div class="text-center text-sm text-gray-500 mt-8">
+            &copy; 2025 Trading Academy. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Login Modal (Must be included on all pages) -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" class="input-field" required>
+                <input type="password" id="loginPassword" placeholder="Password" class="input-field" required>
+                <button type="submit" class="cta-button primary-cta w-full mt-4">Login</button>
+            </form>
+            <p class="text-sm text-center mt-3">
+                <a href="#" id="forgotPasswordLink" class="text-blue-600 hover:underline">Forgot Password?</a>
+            </p>
+            <p class="text-sm text-center mt-3 text-gray-600">
+                Don't have an account? <a href="#" id="switchToSignup" class="text-blue-600 hover:underline font-semibold">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal (Must be included on all pages) -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Create a New Account</h2>
+            <form id="signupForm">
+                <input type="text" id="signupName" placeholder="Full Name" class="input-field" required>
+                <input type="email" id="signupEmail" placeholder="Email" class="input-field" required>
+                <input type="password" id="signupPassword" placeholder="Password (Min 6 characters)" class="input-field" required minlength="6">
+                <button type="submit" class="cta-button primary-cta w-full mt-4">Sign Up</button>
+            </form>
+            <p class="text-sm text-center mt-3 text-gray-600">
+                Already a member? <a href="#" id="switchToLogin" class="text-blue-600 hover:underline font-semibold">Login</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Firebase Setup Snippet -->
+    <!-- IMPORTANT: This block connects your app to the secure Firebase database -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Your specific Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC-IOzm6_mdeChoOXjTcRzO7G0Wz6R70aU",
+            authDomain: "trading-academy-db.firebaseapp.com",
+            projectId: "trading-academy-db",
+            storageBucket: "trading-academy-db.firebasestorage.app",
+            messagingSenderId: "609064464356",
+            appId: "1:609064464356:web:cd486a871f29feedbc21f1",
+            measurementId: "G-7N76K1DGFT"
+        };
+
+        // Initialize Firebase and get services
+        firebase.initializeApp(firebaseConfig);
+        
+        // Global access to Auth and Firestore services
+        const auth = firebase.auth();
+        const db = firebase.firestore(); 
+    </script>
+
+    <!-- Link to your main JavaScript file -->
+    <script src="script.js"></script> 
+</body>
+</html>
